@@ -4,7 +4,8 @@ import patoshi from './patoshi.json' assert { type: "json" }
 
 const { tx: [satoshiCoinbaseTx], hash } = upto36288[9]
 
-// verify btc works
-console.log(await getBlock(await getHashOfBlock(0)))
-console.log(await getBlock(hash))
-console.log(await rpc('gettxout', [satoshiCoinbaseTx, 0]))
+// const decode = await decodeRawTransaction(satoshiCoinbaseTx)
+const {vin, vout, ...tx} = await getRawTransaction(satoshiCoinbaseTx, hash)
+console.log({ vin, ...tx }, JSON.stringify({ vout }, null, 2))
+
+// find out how to get '12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S' from script
