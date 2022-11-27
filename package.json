@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "bitcoin": "bitcoind -rest",
     "server": "nodemon server.js"
   },
   "keywords": [],

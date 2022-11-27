@@ -5,17 +5,17 @@ config();
 
 const {RPC_USER, RPC_PASSWORD} = process.env;
 
-async function bitcoin(method, params = []) {
+export async function rpc(method, params = []) {
   const body = {
     jsonrpc: "1.0",
-    id: "curltext",
+    id: "curltexxxt",
     method,
     params,
   }
   const response = await fetch(`http://127.0.0.1:8332/`, {
     method: "POST",
     headers: {
-      // "content-type": "text/plain;",
+      "content-type": "text/plain;",
       Authorization: `Basic ${btoa(`${RPC_USER}:${RPC_PASSWORD}`)}`
     },
     body: JSON.stringify(body)
@@ -24,15 +24,15 @@ async function bitcoin(method, params = []) {
   return result
 }
 
-export const getHashOfBlock = (index) => bitcoin('getblockhash', [index])
-export const getBlock = (hash) => bitcoin('getblock', [hash])
-export const getRawTransaction = (id) => bitcoin('getrawtransaction', [id])
-export const decodeRawTransaction = (hex) => bitcoin('decoderawtransaction', [hex])
-export const getBlockCount = () => bitcoin("getblockcount")
-export const getBestBlockJash = () => bitcoin("getbestblockhash")
-export const getConnectionCount = () => bitcoin("getconnectioncount")
-export const getDifficulty = () => bitcoin("getdifficulty")
-export const getBlockchainInfo = () => bitcoin("getblockchaininfo")
-export const getMiningInfo = () => bitcoin("getmininginfo")
-export const getPeerInfo = () => bitcoin("getpeerinfo")
-export const getRawMempool = () => bitcoin("getrawmempool")
+export const getHashOfBlock = (index) => rpc('getblockhash', [index])
+export const getBlock = (hash) => rpc('getblock', [hash])
+export const getRawTransaction = (id, block) => rpc('getrawtransaction', [id, true, block])
+export const decodeRawTransaction = (hex, isWitness = undefined) => rpc('decoderawtransaction', [hex, isWitness])
+export const getBlockCount = () => rpc("getblockcount")
+export const getBestBlockJash = () => rpc("getbestblockhash")
+export const getConnectionCount = () => rpc("getconnectioncount")
+export const getDifficulty = () => rpc("getdifficulty")
+export const getBlockchainInfo = () => rpc("getblockchaininfo")
+export const getMiningInfo = () => rpc("getmininginfo")
+export const getPeerInfo = () => rpc("getpeerinfo")
+export const getRawMempool = () => rpc("getrawmempool")
