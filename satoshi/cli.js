@@ -1,39 +1,20 @@
+import { decodeRawTransaction, getRawTransaction } from './bitcoin.js'
 import upto36288 from './upto36288.json' assert { type: "json" }
-import { config } from 'dotenv'
+import patoshi from './patoshi.json' assert { type: "json" }
 
-config();
-
-const {RPC_USER, RPC_PASSWORD} = process.env;
-
-async function bitcoin(method, params = []) {
-  const body = {
-    jsonrpc: "1.0",
-    id: "curltext",
-    method,
-    params,
-  }
-  const response = await fetch(`http://127.0.0.1:8332/`, {
-    method: "POST",
-    headers: {
-      // "content-type": "text/plain;",
-      Authorization: `Basic ${btoa(`${RPC_USER}:${RPC_PASSWORD}`)}`
-    },
-    body: JSON.stringify(body)
-  })
-  const { result } = await response.json()
-  return result
-}
-
-const getHashOfBlock = (index) => bitcoin('getblockhash', [index])
-const getBlock = (hash) => bitcoin('getblock', [hash])
-
+const patoshiSet = new Set(patoshi)
 const withInfo = []
-for (const { block, nonce } of upto36288) {
-  const hash = await getHashOfBlock(block)
-  const data = await getBlock(hash)
+for (const {height, ...data} of upto36288) {
+  // if (tx.length >= 2) {
+  //   console.log(`found ${tx.length} transactions for block #${height}`, { extraNonce, hash, tx, data })
+  //   for (const txx of tx)
+  //     console.log('tx', txx, await getRawTransaction(txx), await decodeRawTransaction(txx))
+  //   break
+  // }
   withInfo.push({
-    ...await data,
-    extraNonce: nonce,
+    ...data,
+    height,
+    patoshi: patoshiSet.has(height)
   })
 }
 
