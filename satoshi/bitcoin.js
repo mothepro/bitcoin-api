@@ -26,7 +26,7 @@ async function bitcoin(method, params = []) {
 
 export const getHashOfBlock = (index) => bitcoin('getblockhash', [index])
 export const getBlock = (hash) => bitcoin('getblock', [hash])
-export const getRawTransaction = (id) => bitcoin('getrawtransaction', [id.])
+export const getRawTransaction = (id) => bitcoin('getrawtransaction', [id])
 export const decodeRawTransaction = (hex) => bitcoin('decoderawtransaction', [hex])
 export const getBlockCount = () => bitcoin("getblockcount")
 export const getBestBlockJash = () => bitcoin("getbestblockhash")
