@@ -9,3 +9,4 @@ const {vin, vout, ...tx} = await getRawTransaction(satoshiCoinbaseTx, hash)
 console.log({ vin, ...tx }, JSON.stringify({ vout }, null, 2))
 
 // find out how to get '12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S' from script
+
