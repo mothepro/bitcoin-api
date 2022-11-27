@@ -1,11 +1,11 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const rpcMethods = require("./routes/api");
+import express from "express"
+import {urlencoded, json} from 'body-parser'
+import rpcMethods from './routes/api.js'
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(urlencoded({ extended: false }));
+app.use(json());
 
 app.use("/api", rpcMethods);
 

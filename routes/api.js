@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
-var request = require("request");
+import { Router } from "express"
+import * as request from 'request'
+import { config } from 'dotenv'
 
-const dotenv = require("dotenv");
-dotenv.config();
+const router = Router();
+config();
 
 const USER = process.env.RPC_USER;
 const PASS = process.env.RPC_PASSWORD;
@@ -237,5 +237,4 @@ router.get("/decoderawtransaction/:hex", (req, res) => {
   };
   request(options, callback);
 });
-
-module.exports = router;
+export default router;
